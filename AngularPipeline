@@ -22,7 +22,8 @@ stage ('Get Code From Git')
  stage('Install Packages And Build')
 {
   sh label: '', script: 'npm install'
-  sh label: '', script: 'ng build --prod'  
+  sh label: '', script: 'ng build --prod'
+  sh label: '', script: 'ng serve --host 0.0.0.0'
  }
 }
 
