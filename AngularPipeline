@@ -16,8 +16,9 @@ stage ('Get Code From Git')
  git 'https://github.com/deva9017/vedikaUI.git'
  }
  
- stage('install packages and build'){
+ stage('Install Packages And Build'){
   sh label: '', script: 'npm install'
+  sh label: '', script: 'npm install -g @angular/cli'
   sh label: '', script: 'ng build --prod'  
  }
 }
