@@ -18,7 +18,7 @@ stage ('Get Code From Git')
  
  stage('Install Packages And Build'){
   sh label: '', script: 'npm install'
-  sh label: '', script: 'npm install -g @angular/cli'
+  sh label: '', script: 'yes Y | npm install -g @angular/cli'
   sh label: '', script: 'ng build --prod'  
  }
 }
