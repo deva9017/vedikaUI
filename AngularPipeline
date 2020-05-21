@@ -14,7 +14,7 @@ stage ('Get Code From Git')
 {
  git 'https://github.com/deva9017/vedikaUI.git'
 }
- stage ('angular') 
+ nodejs('nodejs') 
 {
     //angularcli install
     sh label: '', script: 'yes Y | npm install -g @angular/cli'
