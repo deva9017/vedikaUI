@@ -3,9 +3,9 @@ stage('Nodejs Installation')
 {
 sh label: '', script: '''sudo apt update
 sudo apt -y upgrade
-sudo apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates
-curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-sudo apt -y install nodejs
+sudo apt-get install curl
+curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+sudo apt-get install nodejs
 sudo apt -y  install gcc g++ make
 node --version
 npm --version'''
@@ -17,15 +17,12 @@ stage ('Get Code From Git')
  nodejs('nodejs') 
 {
     //angularcli install
-  sh label: '', script: 'yes Y | npm install -g @angular/cli'
+    sh label: '', script: 'yes Y | npm install -g @angular/cli'
 }
  stage('Install Packages And Build')
 {
   sh label: '', script: 'npm install'
-  sh label: '', script: 'ng build --prod'
+  sh label: '', script: 'ng build --prod'  
   sh label: '', script: 'ng serve --host 0.0.0.0'
-   //sh label: '', script: 'yes Y | npm install -g @angular/cli'
- }
 }
-
-
+}
