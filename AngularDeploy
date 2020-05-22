@@ -13,7 +13,7 @@ node(){
      }
     
     stage ('deploy to remote'){
-       sh label: '', script: 'ssh root@13.127.90.4 "apt-get install curl && curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash - && sudo apt-get install nodejs && sudo apt -y install gcc g++ make && node --version && npm --versiona"'
+       sh label: '', script: 'ssh root@13.127.90.4 "apt-get install curl && curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash - && sudo apt-get install nodejs -y && sudo apt -y install gcc g++ make && node --version && npm --versiona"'
        sh label: '', script: 'ssh root@13.127.90.4 "cd /root/test && git pull https://github.com/deva9017/vedikaUI.git"'
        sh label: '', script: 'scp /var/lib/jenkins/workspace/AngularDeploy/angularui.tar.gz root@13.127.90.4:/root/test'
        sh label: '', script: 'ssh -A root@13.127.90.4 "cd /root/test && tar -xvzf angularui.tar.gz && npm install"'
