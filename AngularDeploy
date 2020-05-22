@@ -1,22 +1,42 @@
-node(){
-    stage('Git checkout') {
-        git 'https://github.com/deva9017/vedikaUI.git'
-    }
-       
-       stage('Build'){
-       
-       sh label: '', script: 'npm install'
-        sh label: '', script: 'ng build --prod'
-     }
-     stage('Package Build') {
-        sh "tar -zcvf angularui.tar.gz dist/vedikaUI/"
-     }
-    
-    stage ('deploy to remote'){
-       sh label: '', script: 'ssh root@13.127.90.4 "apt-get install curl && curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash - && sudo apt-get install nodejs -y && sudo apt -y install gcc g++ make && node --version && npm --versiona"'
-       sh label: '', script: 'ssh root@13.127.90.4 "cd /root/test && git pull https://github.com/deva9017/vedikaUI.git"'
-       sh label: '', script: 'scp /var/lib/jenkins/workspace/AngularDeploy/angularui.tar.gz root@13.127.90.4:/root/test'
-       sh label: '', script: 'ssh -A root@13.127.90.4 "cd /root/test && tar -xvzf angularui.tar.gz && npm install"'
-       
-     }
+node{
+         stage('node js installation'){
+         sh label: '', script: '''#!/bin/bash
+         echo Add Node.js APT Repository
+         sudo apt update
+         sudo apt -y upgrade
+         sudo apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates
+         sudo curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+         echo Install Node.js 12 on Ubuntu / Debian / Linux Mint
+         sudo apt -y install nodejs
+         sudo apt -y  install gcc g++ make
+         echo Confirm Node.js 12 installation by checking the version installed.
+         sudo node --version
+         sudo npm --version
+         echo Install Angular on Ubuntu 18.04
+         sudo npm install -g @angular/cli@9   
+         echo cloning github url
+         sudo git init
+         sudo git clone https://github.com/deva9017/vedikaUI.git
+         cd vedikaUI
+         echo node modules installing
+         sudo npm install
+         echo hosting vedikas application
+         sudo ng build'''
+         } 
+         sshPublisher(publishers: [sshPublisherDesc(configName: 'AngularDeploy', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''#!/bin/bash
+         sudo apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates
+         sudo curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+         echo Install Node.js 12 on Ubuntu / Debian / Linux Mint
+         sudo apt -y install nodejs
+         sudo apt -y  install gcc g++ make
+         echo Confirm Node.js 12 installation by checking the version installed.
+         sudo node --version
+         sudo npm --version 
+         echo Install Angular on Ubuntu 18.04
+         sudo npm install -g @angular/cli@9   
+         sudo git init
+         sudo git clone https://github.com/deva9017/vedikaUI.git
+         cd vedikaUI
+         sudo npm install
+         sudo ng serve --host 0.0.0.0''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '/home/ubuntu', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '*/')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
 }
