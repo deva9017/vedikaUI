@@ -16,8 +16,8 @@ node(){
      stage ('deploy to remote'){
        sh label: '', script: 'ssh -A root@13.127.90.4 "mkdir test && git init"'
        sh label: '', script: 'ssh -A root@13.127.90.4 "cd /root/test && git pull https://github.com/deva9017/vedikaUI.git"'
-       sh label: '', script: 'scp /var/lib/jenkins/workspace/AngularDeploy/angularui.tar.gz root@13.127.90.4:/root/deva'
-       sh label: '', script: 'ssh -A root@13.127.90.4 "cd /root/deva && tar -xvzf angularui.tar.gz && npm install"'
+       sh label: '', script: 'scp /var/lib/jenkins/workspace/AngularDeploy/angularui.tar.gz root@13.127.90.4:/root/test'
+       sh label: '', script: 'ssh -A root@13.127.90.4 "cd /root/test && tar -xvzf angularui.tar.gz && npm install"'
        
      }
 }
