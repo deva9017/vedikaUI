@@ -56,7 +56,7 @@ stage ('Get Code From Git')
         {
           sh label: '', script: 'npm install'
           sh label: '', script: 'ng build --prod'  
-          sh label: '', script: 'ng serve --host 0.0.0.0'
+          sh label: '', script: 'ng serve --port 4500 --host'
         }
          
 }
