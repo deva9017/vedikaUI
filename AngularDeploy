@@ -42,21 +42,4 @@ node{
          sudo npm install
          sudo ng serve --host 0.0.0.0''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '*/')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
          }
-         stage ('Get Code From Git')
-        {
-         git 'https://github.com/deva9017/vedikaUI.git'
-        }
-         
-                 nodejs('NodeJs') 
-        {
-            //angularcli install
-            sh label: '', script: 'yes Y | npm install -g @angular/cli'
-        }
-         stage('Install Packages And Build')
-        {
-          sh label: '', script: 'npm install'
-          sh label: '', script: 'ng build --prod'  
-          sh label: '', script: 'ng serve --port 4500 --host'
-        }
-         
 }
